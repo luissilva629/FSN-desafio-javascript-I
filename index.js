@@ -37,7 +37,6 @@ const alunosDaEscola = [{
         nome: "Lucca", 
         notas: [10, 9.8, 9.6], 
         cursos: [{ 
-  
             nomeDoCurso: "UX", 
             dataMatricula: new Date
         }], 
@@ -46,8 +45,6 @@ const alunosDaEscola = [{
 ];
 
 // implementação
-
-
 
 function adicionarAluno(nome){
     
@@ -71,38 +68,82 @@ function listarAlunos(){
 // listarAlunos()
 
 function buscarAluno(nome){
+    this.contemAluno = false;
+    let objAluno = {};
 
     alunosDaEscola.filter(a => {
         if(a.nome.indexOf(nome) >= 0){
-            console.log(a);
-        } else {
-            return false
+            contemAluno = true;
+            objAluno = a;
         }
+
     })
+
+    if(contemAluno){
+        console.log('Aluno encontrado!')
+        console.log(objAluno)
+        console.log('\n');
+    } else {
+        console.log('Aluno não encontrado!')
+    }
+    return objAluno;
 }
 
-//   buscarAluno('s')
+// buscarAluno('Lucca')
 
 
 function matricularAluno(aluno, curso){
-
-    if(buscarAluno(aluno) == true){
-        // let alunoComMaiusculo = alunosDaEscola[0].nome[0].toUpperCase() + alunosDaEscola[0].nome.slice(1)
-        console.log(this)
-        
+    let novoCurso = {nomeDoCurso: curso, dataMatricula: new Date};
+    if(this.contemAluno){
+        if(aluno.cursos[0] == undefined){
+            aluno.cursos.push(novoCurso)
+            console.log(aluno)
+        } else {
+            console.log(`Aluno já cadastrado no curso de ${aluno.cursos[0].nomeDoCurso}`)
+        }
     }
-
 }
-// matricularAluno('Carlos')
+// matricularAluno(buscarAluno('Carlos'), 'Novo Curso')
 
 function aplicarFalta(aluno){
-    
+    if(this.contemAluno){
+        if(aluno.cursos[0] == undefined){
+            console.log('O aluno não está matriculado em um curso.')
+        } else {
+            aluno.faltas++;
+            console.log('Falta aplicada!')
+            console.log(`Aluno nome: ${aluno.nome} \nfaltas: ${aluno.faltas}`)
+        }
+    }
 }
+
+// aplicarFalta(buscarAluno('Lucca'))
     
 function aplicarNota(aluno){
-    
+    if(this.contemAluno){
+        if(aluno.cursos[0] == undefined){
+            console.log('O aluno não está matriculado em um curso.')
+        } else {
+            aluno.notas.push(10, 9.7, 8,4);
+            console.log('Notas aplicadas!')
+            console.log(aluno)
+        }
+    }
 }
+
+// aplicarNota(buscarAluno('Lucca'))
   
 function aprovarAluno(aluno){
-
+    if(this.contemAluno){
+        if(aluno.cursos[0] == undefined){
+            console.log('O aluno não está matriculado em um curso.')
+        } else {
+            const resultado = aluno.notas.map(a => a).reduce((pilha, notas) => {
+                return pilha + notas;
+            })
+            console.log(resultado);
+        }
+    }
 }
+
+// aprovarAluno(buscarAluno('Lucca'))
