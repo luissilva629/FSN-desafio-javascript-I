@@ -138,12 +138,19 @@ function aprovarAluno(aluno){
         if(aluno.cursos[0] == undefined){
             console.log('O aluno não está matriculado em um curso.')
         } else {
-            const resultado = aluno.notas.map(a => a).reduce((pilha, notas) => {
-                return pilha + notas;
-            })
-            console.log(resultado);
+            // const resultado = aluno.notas.map(a => a).reduce((pilha, notas) => {
+            //     const media = (pilha + notas)
+            //     return media
+            // })
+            let media = aluno.notas.reduce((pilha, notas) => pilha + notas) / aluno.notas.length;
+                if(aluno.faltas <= 3 && media >= 7){
+                    console.log(`Aluno ${aluno.nome}: Aprovado!`);                   
+                } else {
+                    console.log(`Aluno ${aluno.nome}: Reprovado!`);
+                }
+            console.log(`Média: ${media.toFixed(2)}`);
         }
     }
 }
 
-// aprovarAluno(buscarAluno('Lucca'))
+aprovarAluno(buscarAluno('Lucca'))
